@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.admin.dao.ArticleGoodsMapper">
+  <cache type="org.mybatis.caches.ehcache.LoggingEhcache" />
+  <resultMap id="BaseResultMap" type="com.admin.model.ArticleGoods">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="article_id" jdbcType="INTEGER" property="article_id" />
+    <result column="goods_no" jdbcType="VARCHAR" property="goods_no" />
+    <result column="stock_quantity" jdbcType="INTEGER" property="stock_quantity" />
+    <result column="market_price" jdbcType="DECIMAL" property="market_price" />
+    <result column="sell_price" jdbcType="DECIMAL" property="sell_price" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.admin.model.ArticleGoodsWithBLOBs">
+    <result column="spec_ids" jdbcType="LONGVARCHAR" property="spec_ids" />
+    <result column="spec_text" jdbcType="LONGVARCHAR" property="spec_text" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, article_id, goods_no, stock_quantity, market_price, sell_price
+  </sql>
+  <sql id="Blob_Column_List">
+    spec_ids, spec_text
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from dt_article_goods
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <insert id="insertSelective" parameterType="com.admin.model.ArticleGoodsWithBLOBs">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into dt_article_goods
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="article_id != null">
+        article_id,
+      </if>
+      <if test="goods_no != null">
+        goods_no,
+      </if>
+      <if test="stock_quantity != null">
+        stock_quantity,
+      </if>
+      <if test="market_price != null">
+        market_price,
+      </if>
+      <if test="sell_price != null">
+        sell_price,
+      </if>
+      <if test="spec_ids != null">
+        spec_ids,
+      </if>
+      <if test="spec_text != null">
+        spec_text,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="article_id != null">
+        #{article_id,jdbcType=INTEGER},
+      </if>
+      <if test="goods_no != null">
+        #{goods_no,jdbcType=VARCHAR},
+      </if>
+      <if test="stock_quantity != null">
+        #{stock_quantity,jdbcType=INTEGER},
+      </if>
+      <if test="market_price != null">
+        #{market_price,jdbcType=DECIMAL},
+      </if>
+      <if test="sell_price != null">
+        #{sell_price,jdbcType=DECIMAL},
+      </if>
+      <if test="spec_ids != null">
+        #{spec_ids,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="spec_text != null">
+        #{spec_text,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.admin.model.ArticleGoodsWithBLOBs">
+    update dt_article_goods
+    <set>
+      <if test="article_id != null">
+        article_id = #{article_id,jdbcType=INTEGER},
+      </if>
+      <if test="goods_no != null">
+        goods_no = #{goods_no,jdbcType=VARCHAR},
+      </if>
+      <if test="stock_quantity != null">
+        stock_quantity = #{stock_quantity,jdbcType=INTEGER},
+      </if>
+      <if test="market_price != null">
+        market_price = #{market_price,jdbcType=DECIMAL},
+      </if>
+      <if test="sell_price != null">
+        sell_price = #{sell_price,jdbcType=DECIMAL},
+      </if>
+      <if test="spec_ids != null">
+        spec_ids = #{spec_ids,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="spec_text != null">
+        spec_text = #{spec_text,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from dt_article_goods
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <select id="selectByCondition" parameterType="com.admin.model.ArticleGoodsWithBLOBs" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from dt_article_goods where 1 = 1 
+    <if test="article_id != null">
+        and article_id = #{article_id,jdbcType=INTEGER}
+    </if>
+    <if test="goods_no != null">
+        and goods_no = #{goods_no,jdbcType=VARCHAR}
+    </if>
+    <if test="stock_quantity != null">
+        and stock_quantity = #{stock_quantity,jdbcType=INTEGER}
+    </if>
+    <if test="market_price != null">
+        and market_price = #{market_price,jdbcType=DECIMAL}
+    </if>
+    <if test="sell_price != null">
+        and sell_price = #{sell_price,jdbcType=DECIMAL}
+    </if>
+    <if test="spec_ids != null">
+        and spec_ids = #{spec_ids,jdbcType=LONGVARCHAR}
+    </if>
+    <if test="spec_text != null">
+        and spec_text = #{spec_text,jdbcType=LONGVARCHAR}
+    </if>
+  </select>
+  <select id="selectAll" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from dt_article_goods
+  </select>
+  <delete id="deleteBySelective" parameterType="com.admin.model.ArticleGoodsWithBLOBs">
+    delete from dt_article_goods
+    <where>
+      <if test="article_id != null">
+          and article_id = #{article_id,jdbcType=INTEGER}
+      </if>
+      <if test="goods_no != null">
+          and goods_no = #{goods_no,jdbcType=VARCHAR}
+      </if>
+      <if test="stock_quantity != null">
+          and stock_quantity = #{stock_quantity,jdbcType=INTEGER}
+      </if>
+      <if test="market_price != null">
+          and market_price = #{market_price,jdbcType=DECIMAL}
+      </if>
+      <if test="sell_price != null">
+          and sell_price = #{sell_price,jdbcType=DECIMAL}
+      </if>
+      <if test="spec_ids != null">
+          and spec_ids = #{spec_ids,jdbcType=LONGVARCHAR}
+      </if>
+      <if test="spec_text != null">
+          and spec_text = #{spec_text,jdbcType=LONGVARCHAR}
+      </if>
+    </where>
+  </delete>
+</mapper>

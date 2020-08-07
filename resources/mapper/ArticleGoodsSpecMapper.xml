@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.admin.dao.ArticleGoodsSpecMapper">
+  <cache type="org.mybatis.caches.ehcache.LoggingEhcache" />
+  <resultMap id="BaseResultMap" type="com.admin.model.ArticleGoodsSpec">
+    <result column="article_id" jdbcType="INTEGER" property="article_id" />
+    <result column="spec_id" jdbcType="INTEGER" property="spec_id" />
+    <result column="parent_id" jdbcType="INTEGER" property="parent_id" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="img_url" jdbcType="VARCHAR" property="img_url" />
+  </resultMap>
+  <insert id="insertSelective" parameterType="com.admin.model.ArticleGoodsSpec">
+    insert into dt_article_goods_spec
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="article_id != null">
+        article_id,
+      </if>
+      <if test="spec_id != null">
+        spec_id,
+      </if>
+      <if test="parent_id != null">
+        parent_id,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="img_url != null">
+        img_url,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="article_id != null">
+        #{article_id,jdbcType=INTEGER},
+      </if>
+      <if test="spec_id != null">
+        #{spec_id,jdbcType=INTEGER},
+      </if>
+      <if test="parent_id != null">
+        #{parent_id,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="img_url != null">
+        #{img_url,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

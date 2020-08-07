@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.admin.dao.ChannelMapper">
+<!--  <cache type="org.mybatis.caches.ehcache.LoggingEhcache" />-->
+  <resultMap id="BaseResultMap" type="com.admin.model.Channel">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="site_id" jdbcType="INTEGER" property="site_id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="is_albums" jdbcType="TINYINT" property="is_albums" />
+    <result column="is_attach" jdbcType="TINYINT" property="is_attach" />
+    <result column="is_spec" jdbcType="TINYINT" property="is_spec" />
+    <result column="sort_id" jdbcType="INTEGER" property="sort_id" />
+    <result column="limitShowLevels" jdbcType="VARCHAR" property="limitShowLevels" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, site_id, name, title, is_albums, is_attach, is_spec, sort_id, limitShowLevels
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from dt_channel
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <insert id="insertSelective" parameterType="com.admin.model.Channel">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into dt_channel
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="site_id != null">
+        site_id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="is_albums != null">
+        is_albums,
+      </if>
+      <if test="is_attach != null">
+        is_attach,
+      </if>
+      <if test="is_spec != null">
+        is_spec,
+      </if>
+      <if test="sort_id != null">
+        sort_id,
+      </if>
+      <if test="limitShowLevels != null">
+        limitShowLevels,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="site_id != null">
+        #{site_id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="is_albums != null">
+        #{is_albums,jdbcType=TINYINT},
+      </if>
+      <if test="is_attach != null">
+        #{is_attach,jdbcType=TINYINT},
+      </if>
+      <if test="is_spec != null">
+        #{is_spec,jdbcType=TINYINT},
+      </if>
+      <if test="sort_id != null">
+        #{sort_id,jdbcType=INTEGER},
+      </if>
+      <if test="limitShowLevels != null">
+        #{limitShowLevels,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.admin.model.Channel">
+    update dt_channel
+    <set>
+      <if test="site_id != null">
+        site_id = #{site_id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="is_albums != null">
+        is_albums = #{is_albums,jdbcType=TINYINT},
+      </if>
+      <if test="is_attach != null">
+        is_attach = #{is_attach,jdbcType=TINYINT},
+      </if>
+      <if test="is_spec != null">
+        is_spec = #{is_spec,jdbcType=TINYINT},
+      </if>
+      <if test="sort_id != null">
+        sort_id = #{sort_id,jdbcType=INTEGER},
+      </if>
+      <if test="limitShowLevels != null">
+        limitShowLevels = #{limitShowLevels,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from dt_channel
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <select id="selectByCondition" parameterType="com.admin.model.Channel" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from dt_channel where 1 = 1
+    <if test="site_id != null">
+        and site_id = #{site_id,jdbcType=INTEGER}
+    </if>
+    <if test="name != null">
+        and name = #{name,jdbcType=VARCHAR}
+    </if>
+    <if test="title != null">
+        and title = #{title,jdbcType=VARCHAR}
+    </if>
+    <if test="is_albums != null">
+        and is_albums = #{is_albums,jdbcType=TINYINT}
+    </if>
+    <if test="is_attach != null">
+        and is_attach = #{is_attach,jdbcType=TINYINT}
+    </if>
+    <if test="is_spec != null">
+        and is_spec = #{is_spec,jdbcType=TINYINT}
+    </if>
+    <if test="sort_id != null">
+        and sort_id = #{sort_id,jdbcType=INTEGER}
+    </if>
+    <if test="limitShowLevels != null">
+      and limitShowLevels = #{limitShowLevels,jdbcType=VARCHAR}
+    </if>
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from dt_channel order by sort_id ASC
+  </select>
+  <delete id="deleteBySelective" parameterType="com.admin.model.Channel">
+    delete from dt_channel
+    <where>
+      <if test="site_id != null">
+          and site_id = #{site_id,jdbcType=INTEGER}
+      </if>
+      <if test="name != null">
+          and name = #{name,jdbcType=VARCHAR}
+      </if>
+      <if test="title != null">
+          and title = #{title,jdbcType=VARCHAR}
+      </if>
+      <if test="is_albums != null">
+          and is_albums = #{is_albums,jdbcType=TINYINT}
+      </if>
+      <if test="is_attach != null">
+          and is_attach = #{is_attach,jdbcType=TINYINT}
+      </if>
+      <if test="is_spec != null">
+          and is_spec = #{is_spec,jdbcType=TINYINT}
+      </if>
+      <if test="sort_id != null">
+          and sort_id = #{sort_id,jdbcType=INTEGER}
+      </if>
+      <if test="limitShowLevels != null">
+        and limitShowLevels = #{limitShowLevels,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </delete>
+</mapper>

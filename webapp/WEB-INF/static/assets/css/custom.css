@@ -1,0 +1,94 @@
+body{
+    background: #050301
+}
+.body-width {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.curs{
+    cursor: pointer;
+}
+
+.border-dds-top {
+    border-top: 1px #73503c solid;;
+}
+
+.text-bds {
+    color: #edd8b1 !important;
+}
+
+.text-menuitem {
+    color: #edd8b1 !important;
+    font-weight: bold;
+    letter-spacing: 3px;
+}
+
+.text-bm-menuitem {
+    color: #FFF !important;
+    font-size: 1.2rem;
+}
+
+.text-menuitem-active {
+    color: #ffe514 !important;
+    font-weight: bold;
+    letter-spacing: 3px;
+}
+
+.text-bds-title {
+    color: #edd8b1 !important;
+    font-size: 2.5rem;
+}
+
+.text-bds-subtitle {
+    color: #FFF !important;
+    font-size: 1.4rem;
+}
+
+.text-bds-subtitle-p {
+    color: #edd8b1 !important;
+    font-size: 1.5rem;
+}
+.text-bds-subtitle-p1 {
+    font-size: 1.5rem;
+}
+
+.text-bds-titlebig {
+    color: #edd8b1 !important;
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+.text-bds-subtitlebig {
+    color: #FFF !important;
+    font-size: 1.4rem;
+}
+
+.txtoverlay {
+    position: absolute;
+    right: 0;
+    bottom: 80px;
+    left: 0;
+    padding: 1.25rem;
+}
+.txtoverlaybig {
+    position: absolute;
+    top:0;
+    right: 0;
+    left: 0;
+    padding: 1.25rem;
+}
+.txtoverlay-p {
+    position: absolute;
+    right: 0;
+    top:0;
+    left: 0;
+    padding: 1.25rem;
+}
+.txtoverlay-p-b {
+    position: absolute;
+    right: 0;
+    bottom:0;
+    left: 0;
+    padding: 1.25rem;
+}

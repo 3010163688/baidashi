@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.admin.dao.ArticleAttributeValueMapper">
+  <cache type="org.mybatis.caches.ehcache.LoggingEhcache" />
+  <resultMap id="BaseResultMap" type="com.admin.model.ArticleAttributeValue">
+    <id column="article_id" jdbcType="INTEGER" property="article_id" />
+    <result column="sub_title" jdbcType="VARCHAR" property="sub_title" />
+    <result column="source" jdbcType="VARCHAR" property="source" />
+    <result column="author" jdbcType="VARCHAR" property="author" />
+    <result column="goods_no" jdbcType="VARCHAR" property="goods_no" />
+    <result column="stock_quantity" jdbcType="INTEGER" property="stock_quantity" />
+    <result column="market_price" jdbcType="DECIMAL" property="market_price" />
+    <result column="sell_price" jdbcType="DECIMAL" property="sell_price" />
+    <result column="point" jdbcType="INTEGER" property="point" />
+    <result column="video_src" jdbcType="VARCHAR" property="video_src" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    article_id, sub_title, source, author, goods_no, stock_quantity, market_price, sell_price, 
+    point, video_src
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from dt_article_attribute_value
+    where article_id = #{article_id,jdbcType=INTEGER}
+  </select>
+  <insert id="insertSelective" parameterType="com.admin.model.ArticleAttributeValue">
+    insert into dt_article_attribute_value
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="article_id != null">
+        article_id,
+      </if>
+      <if test="sub_title != null">
+        sub_title,
+      </if>
+      <if test="source != null">
+        source,
+      </if>
+      <if test="author != null">
+        author,
+      </if>
+      <if test="goods_no != null">
+        goods_no,
+      </if>
+      <if test="stock_quantity != null">
+        stock_quantity,
+      </if>
+      <if test="market_price != null">
+        market_price,
+      </if>
+      <if test="sell_price != null">
+        sell_price,
+      </if>
+      <if test="point != null">
+        point,
+      </if>
+      <if test="video_src != null">
+        video_src,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="article_id != null">
+        #{article_id,jdbcType=INTEGER},
+      </if>
+      <if test="sub_title != null">
+        #{sub_title,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null">
+        #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="author != null">
+        #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="goods_no != null">
+        #{goods_no,jdbcType=VARCHAR},
+      </if>
+      <if test="stock_quantity != null">
+        #{stock_quantity,jdbcType=INTEGER},
+      </if>
+      <if test="market_price != null">
+        #{market_price,jdbcType=DECIMAL},
+      </if>
+      <if test="sell_price != null">
+        #{sell_price,jdbcType=DECIMAL},
+      </if>
+      <if test="point != null">
+        #{point,jdbcType=INTEGER},
+      </if>
+      <if test="video_src != null">
+        #{video_src,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.admin.model.ArticleAttributeValue">
+    update dt_article_attribute_value
+    <set>
+      <if test="sub_title != null">
+        sub_title = #{sub_title,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null">
+        source = #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="author != null">
+        author = #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="goods_no != null">
+        goods_no = #{goods_no,jdbcType=VARCHAR},
+      </if>
+      <if test="stock_quantity != null">
+        stock_quantity = #{stock_quantity,jdbcType=INTEGER},
+      </if>
+      <if test="market_price != null">
+        market_price = #{market_price,jdbcType=DECIMAL},
+      </if>
+      <if test="sell_price != null">
+        sell_price = #{sell_price,jdbcType=DECIMAL},
+      </if>
+      <if test="point != null">
+        point = #{point,jdbcType=INTEGER},
+      </if>
+      <if test="video_src != null">
+        video_src = #{video_src,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where article_id = #{article_id,jdbcType=INTEGER}
+  </update>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from dt_article_attribute_value
+    where article_id = #{article_id,jdbcType=INTEGER}
+  </delete>
+  <select id="selectByCondition" parameterType="com.admin.model.ArticleAttributeValue" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from dt_article_attribute_value where 1 = 1 
+    <if test="sub_title != null">
+        and sub_title = #{sub_title,jdbcType=VARCHAR}
+    </if>
+    <if test="source != null">
+        and source = #{source,jdbcType=VARCHAR}
+    </if>
+    <if test="author != null">
+        and author = #{author,jdbcType=VARCHAR}
+    </if>
+    <if test="goods_no != null">
+        and goods_no = #{goods_no,jdbcType=VARCHAR}
+    </if>
+    <if test="stock_quantity != null">
+        and stock_quantity = #{stock_quantity,jdbcType=INTEGER}
+    </if>
+    <if test="market_price != null">
+        and market_price = #{market_price,jdbcType=DECIMAL}
+    </if>
+    <if test="sell_price != null">
+        and sell_price = #{sell_price,jdbcType=DECIMAL}
+    </if>
+    <if test="point != null">
+        and point = #{point,jdbcType=INTEGER}
+    </if>
+    <if test="video_src != null">
+        and video_src = #{video_src,jdbcType=VARCHAR}
+    </if>
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from dt_article_attribute_value
+  </select>
+  <delete id="deleteBySelective" parameterType="com.admin.model.ArticleAttributeValue">
+    delete from dt_article_attribute_value
+    <where>
+      <if test="sub_title != null">
+          and sub_title = #{sub_title,jdbcType=VARCHAR}
+      </if>
+      <if test="source != null">
+          and source = #{source,jdbcType=VARCHAR}
+      </if>
+      <if test="author != null">
+          and author = #{author,jdbcType=VARCHAR}
+      </if>
+      <if test="goods_no != null">
+          and goods_no = #{goods_no,jdbcType=VARCHAR}
+      </if>
+      <if test="stock_quantity != null">
+          and stock_quantity = #{stock_quantity,jdbcType=INTEGER}
+      </if>
+      <if test="market_price != null">
+          and market_price = #{market_price,jdbcType=DECIMAL}
+      </if>
+      <if test="sell_price != null">
+          and sell_price = #{sell_price,jdbcType=DECIMAL}
+      </if>
+      <if test="point != null">
+          and point = #{point,jdbcType=INTEGER}
+      </if>
+      <if test="video_src != null">
+          and video_src = #{video_src,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </delete>
+</mapper>

@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.admin.dao.ChannelSiteMapper">
+  <cache type="org.mybatis.caches.ehcache.LoggingEhcache" />
+  <resultMap id="BaseResultMap" type="com.admin.model.ChannelSite">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="build_path" jdbcType="VARCHAR" property="build_path" />
+    <result column="templet_path" jdbcType="VARCHAR" property="templet_path" />
+    <result column="domain" jdbcType="VARCHAR" property="domain" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="logo" jdbcType="VARCHAR" property="logo" />
+    <result column="company" jdbcType="VARCHAR" property="company" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="tel" jdbcType="VARCHAR" property="tel" />
+    <result column="fax" jdbcType="VARCHAR" property="fax" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="crod" jdbcType="VARCHAR" property="crod" />
+    <result column="seo_title" jdbcType="VARCHAR" property="seo_title" />
+    <result column="seo_keyword" jdbcType="VARCHAR" property="seo_keyword" />
+    <result column="is_mobile" jdbcType="TINYINT" property="is_mobile" />
+    <result column="is_default" jdbcType="TINYINT" property="is_default" />
+    <result column="sort_id" jdbcType="INTEGER" property="sort_id" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.admin.model.ChannelSiteWithBLOBs">
+    <result column="copyright" jdbcType="LONGVARCHAR" property="copyright" />
+    <result column="seo_description" jdbcType="LONGVARCHAR" property="seo_description" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, title, build_path, templet_path, domain, name, logo, company, address, tel, fax, 
+    email, crod, seo_title, seo_keyword, is_mobile, is_default, sort_id
+  </sql>
+  <sql id="Blob_Column_List">
+    copyright, seo_description
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from dt_channel_site
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <insert id="insertSelective" parameterType="com.admin.model.ChannelSiteWithBLOBs">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into dt_channel_site
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="title != null">
+        title,
+      </if>
+      <if test="build_path != null">
+        build_path,
+      </if>
+      <if test="templet_path != null">
+        templet_path,
+      </if>
+      <if test="domain != null">
+        domain,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="logo != null">
+        logo,
+      </if>
+      <if test="company != null">
+        company,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="tel != null">
+        tel,
+      </if>
+      <if test="fax != null">
+        fax,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="crod != null">
+        crod,
+      </if>
+      <if test="seo_title != null">
+        seo_title,
+      </if>
+      <if test="seo_keyword != null">
+        seo_keyword,
+      </if>
+      <if test="is_mobile != null">
+        is_mobile,
+      </if>
+      <if test="is_default != null">
+        is_default,
+      </if>
+      <if test="sort_id != null">
+        sort_id,
+      </if>
+      <if test="copyright != null">
+        copyright,
+      </if>
+      <if test="seo_description != null">
+        seo_description,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="build_path != null">
+        #{build_path,jdbcType=VARCHAR},
+      </if>
+      <if test="templet_path != null">
+        #{templet_path,jdbcType=VARCHAR},
+      </if>
+      <if test="domain != null">
+        #{domain,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="logo != null">
+        #{logo,jdbcType=VARCHAR},
+      </if>
+      <if test="company != null">
+        #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null">
+        #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="fax != null">
+        #{fax,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="crod != null">
+        #{crod,jdbcType=VARCHAR},
+      </if>
+      <if test="seo_title != null">
+        #{seo_title,jdbcType=VARCHAR},
+      </if>
+      <if test="seo_keyword != null">
+        #{seo_keyword,jdbcType=VARCHAR},
+      </if>
+      <if test="is_mobile != null">
+        #{is_mobile,jdbcType=TINYINT},
+      </if>
+      <if test="is_default != null">
+        #{is_default,jdbcType=TINYINT},
+      </if>
+      <if test="sort_id != null">
+        #{sort_id,jdbcType=INTEGER},
+      </if>
+      <if test="copyright != null">
+        #{copyright,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="seo_description != null">
+        #{seo_description,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.admin.model.ChannelSiteWithBLOBs">
+    update dt_channel_site
+    <set>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="build_path != null">
+        build_path = #{build_path,jdbcType=VARCHAR},
+      </if>
+      <if test="templet_path != null">
+        templet_path = #{templet_path,jdbcType=VARCHAR},
+      </if>
+      <if test="domain != null">
+        domain = #{domain,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="logo != null">
+        logo = #{logo,jdbcType=VARCHAR},
+      </if>
+      <if test="company != null">
+        company = #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null">
+        tel = #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="fax != null">
+        fax = #{fax,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="crod != null">
+        crod = #{crod,jdbcType=VARCHAR},
+      </if>
+      <if test="seo_title != null">
+        seo_title = #{seo_title,jdbcType=VARCHAR},
+      </if>
+      <if test="seo_keyword != null">
+        seo_keyword = #{seo_keyword,jdbcType=VARCHAR},
+      </if>
+      <if test="is_mobile != null">
+        is_mobile = #{is_mobile,jdbcType=TINYINT},
+      </if>
+      <if test="is_default != null">
+        is_default = #{is_default,jdbcType=TINYINT},
+      </if>
+      <if test="sort_id != null">
+        sort_id = #{sort_id,jdbcType=INTEGER},
+      </if>
+      <if test="copyright != null">
+        copyright = #{copyright,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="seo_description != null">
+        seo_description = #{seo_description,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from dt_channel_site
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <select id="selectByCondition" parameterType="com.admin.model.ChannelSiteWithBLOBs" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from dt_channel_site where 1 = 1 
+    <if test="title != null">
+        and title = #{title,jdbcType=VARCHAR}
+    </if>
+    <if test="build_path != null">
+        and build_path = #{build_path,jdbcType=VARCHAR}
+    </if>
+    <if test="templet_path != null">
+        and templet_path = #{templet_path,jdbcType=VARCHAR}
+    </if>
+    <if test="domain != null">
+        and domain = #{domain,jdbcType=VARCHAR}
+    </if>
+    <if test="name != null">
+        and name = #{name,jdbcType=VARCHAR}
+    </if>
+    <if test="logo != null">
+        and logo = #{logo,jdbcType=VARCHAR}
+    </if>
+    <if test="company != null">
+        and company = #{company,jdbcType=VARCHAR}
+    </if>
+    <if test="address != null">
+        and address = #{address,jdbcType=VARCHAR}
+    </if>
+    <if test="tel != null">
+        and tel = #{tel,jdbcType=VARCHAR}
+    </if>
+    <if test="fax != null">
+        and fax = #{fax,jdbcType=VARCHAR}
+    </if>
+    <if test="email != null">
+        and email = #{email,jdbcType=VARCHAR}
+    </if>
+    <if test="crod != null">
+        and crod = #{crod,jdbcType=VARCHAR}
+    </if>
+    <if test="seo_title != null">
+        and seo_title = #{seo_title,jdbcType=VARCHAR}
+    </if>
+    <if test="seo_keyword != null">
+        and seo_keyword = #{seo_keyword,jdbcType=VARCHAR}
+    </if>
+    <if test="is_mobile != null">
+        and is_mobile = #{is_mobile,jdbcType=TINYINT}
+    </if>
+    <if test="is_default != null">
+        and is_default = #{is_default,jdbcType=TINYINT}
+    </if>
+    <if test="sort_id != null">
+        and sort_id = #{sort_id,jdbcType=INTEGER}
+    </if>
+    <if test="copyright != null">
+        and copyright = #{copyright,jdbcType=LONGVARCHAR}
+    </if>
+    <if test="seo_description != null">
+        and seo_description = #{seo_description,jdbcType=LONGVARCHAR}
+    </if>
+  </select>
+  <select id="selectAll" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from dt_channel_site
+  </select>
+  <delete id="deleteBySelective" parameterType="com.admin.model.ChannelSiteWithBLOBs">
+    delete from dt_channel_site
+    <where>
+      <if test="title != null">
+          and title = #{title,jdbcType=VARCHAR}
+      </if>
+      <if test="build_path != null">
+          and build_path = #{build_path,jdbcType=VARCHAR}
+      </if>
+      <if test="templet_path != null">
+          and templet_path = #{templet_path,jdbcType=VARCHAR}
+      </if>
+      <if test="domain != null">
+          and domain = #{domain,jdbcType=VARCHAR}
+      </if>
+      <if test="name != null">
+          and name = #{name,jdbcType=VARCHAR}
+      </if>
+      <if test="logo != null">
+          and logo = #{logo,jdbcType=VARCHAR}
+      </if>
+      <if test="company != null">
+          and company = #{company,jdbcType=VARCHAR}
+      </if>
+      <if test="address != null">
+          and address = #{address,jdbcType=VARCHAR}
+      </if>
+      <if test="tel != null">
+          and tel = #{tel,jdbcType=VARCHAR}
+      </if>
+      <if test="fax != null">
+          and fax = #{fax,jdbcType=VARCHAR}
+      </if>
+      <if test="email != null">
+          and email = #{email,jdbcType=VARCHAR}
+      </if>
+      <if test="crod != null">
+          and crod = #{crod,jdbcType=VARCHAR}
+      </if>
+      <if test="seo_title != null">
+          and seo_title = #{seo_title,jdbcType=VARCHAR}
+      </if>
+      <if test="seo_keyword != null">
+          and seo_keyword = #{seo_keyword,jdbcType=VARCHAR}
+      </if>
+      <if test="is_mobile != null">
+          and is_mobile = #{is_mobile,jdbcType=TINYINT}
+      </if>
+      <if test="is_default != null">
+          and is_default = #{is_default,jdbcType=TINYINT}
+      </if>
+      <if test="sort_id != null">
+          and sort_id = #{sort_id,jdbcType=INTEGER}
+      </if>
+      <if test="copyright != null">
+          and copyright = #{copyright,jdbcType=LONGVARCHAR}
+      </if>
+      <if test="seo_description != null">
+          and seo_description = #{seo_description,jdbcType=LONGVARCHAR}
+      </if>
+    </where>
+  </delete>
+</mapper>

@@ -1,0 +1,670 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.admin.dao.ArticleMapper">
+<!--  <cache type="org.mybatis.caches.ehcache.LoggingEhcache" />-->
+  <resultMap id="BaseResultMap" type="com.admin.model.Article">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="channel_id" jdbcType="INTEGER" property="channel_id" />
+    <result column="category_id" jdbcType="INTEGER" property="category_id" />
+    <result column="category_title" jdbcType="VARCHAR" property="category_title" />
+    <result column="call_index" jdbcType="VARCHAR" property="call_index" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="subTitle" jdbcType="VARCHAR" property="subTitle" />
+    <result column="link_url" jdbcType="VARCHAR" property="link_url" />
+    <result column="img_url" jdbcType="VARCHAR" property="img_url" />
+    <result column="seo_title" jdbcType="VARCHAR" property="seo_title" />
+    <result column="seo_keywords" jdbcType="VARCHAR" property="seo_keywords" />
+    <result column="seo_description" jdbcType="VARCHAR" property="seo_description" />
+    <result column="tags" jdbcType="VARCHAR" property="tags" />
+    <result column="zhaiyao" jdbcType="VARCHAR" property="zhaiyao" />
+    <result column="sort_id" jdbcType="INTEGER" property="sort_id" />
+    <result column="click" jdbcType="INTEGER" property="click" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="is_msg" jdbcType="TINYINT" property="is_msg" />
+    <result column="is_top" jdbcType="BIT" property="is_top" />
+    <result column="is_red" jdbcType="BIT" property="is_red" />
+    <result column="is_hot" jdbcType="BIT" property="is_hot" />
+    <result column="is_slide" jdbcType="BIT" property="is_slide" />
+    <result column="is_sys" jdbcType="TINYINT" property="is_sys" />
+    <result column="user_name" jdbcType="VARCHAR" property="user_name" />
+    <result column="add_time" jdbcType="TIMESTAMP" property="add_time" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="update_time" />
+    <result column="titleEn" jdbcType="VARCHAR" property="titleEn" />
+    <result column="subTitleEn" jdbcType="VARCHAR" property="subTitleEn" />
+    <result column="zhaiyaoEn" jdbcType="VARCHAR" property="zhaiyaoEn" />
+    <result column="attachment_url" jdbcType="VARCHAR" property="attachment_url" />
+    <result column="localRecOP" jdbcType="VARCHAR" property="localRecOP" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.admin.model.ArticleWithBLOBs">
+    <result column="contents" jdbcType="LONGVARCHAR" property="contents" />
+    <result column="contentsEn" jdbcType="LONGVARCHAR" property="contentsEn" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, channel_id, category_id, call_index, title, category_title, subTitle, link_url, img_url, seo_title, seo_keywords,
+    seo_description, tags, zhaiyao, sort_id, click, status, is_msg, is_top, is_red, is_hot,
+    is_slide, is_sys, user_name, add_time, update_time,titleEn, subTitleEn, zhaiyaoEn, attachment_url, localRecOP,remarks
+  </sql>
+  <sql id="Blob_Column_List">
+    contents,contentsEn
+  </sql>
+  <select id="selectByChannelId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from dt_article
+    where 	channel_id = #{channel_id,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByWhere"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from dt_article
+    <trim prefix="Where" prefixOverrides="and">
+      <if test="channelId!=null">
+        channel_id=#{channelId}
+      </if>
+      <if test="categoryId!=null">
+        and category_id=#{categoryId}
+      </if>
+      <if test="title!=null and title!=''">
+        and title like concat(concat('%',#{title}),'%')
+      </if>
+    </trim>
+    order by sort_id ASC
+  </select>
+
+  <select id="frontSelectByWhere1"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from dt_article
+    <trim prefix="Where" prefixOverrides="and">
+      <if test="channelId!=null">
+        channel_id=#{channelId}
+      </if>
+      <if test="categoryId!=null">
+        and category_id=#{categoryId}  and (status=0 or status=1)
+      </if>
+      <if test="title!=null and title!=''">
+        and title like concat(concat('%',#{title}),'%')
+      </if>
+    </trim>
+    order by sort_id ASC
+  </select>
+
+  <select id="frontSelectByWhere2" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from dt_article
+    <trim prefix="Where" prefixOverrides="and">
+      <if test="channelId!=null">
+        channel_id=#{channelId}
+      </if>
+      <if test="status!=null">
+        and status=#{status}
+      </if>
+      <if test="is_top!=null">
+        and is_top=#{is_top}
+      </if>
+      <if test="is_red!=null">
+        and is_red=#{is_red}
+      </if>
+      <if test="is_hot!=null">
+        and is_hot=#{is_hot}
+      </if>
+      <if test="is_slide!=null">
+        and is_slide=#{is_slide}
+      </if>
+      <if test="class_list!=null and class_list!='' and categoryId!=null">
+        and category_id in (SELECT id FROM dt_article_category WHERE class_list LIKE concat(#{class_list},'%') or id=#{categoryId})
+      </if>
+    </trim>
+    order by sort_id ASC
+  </select>
+
+  <select id="frontSelectByWhere"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from dt_article
+    <trim prefix="Where" prefixOverrides="and">
+      <if test="channelId!=null">
+        channel_id=#{channelId}
+      </if>
+      <if test="channelId!=null">
+        and (status=0 or status=1)
+      </if>
+      <if test="class_list!=null and class_list!='' and categoryId!=null">
+        and category_id in (SELECT id FROM dt_article_category WHERE class_list LIKE concat(#{class_list},'%') or id=#{categoryId})
+      </if>
+    </trim>
+    order by sort_id ASC
+  </select>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from dt_article
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <insert id="insertSelective" parameterType="com.admin.model.ArticleWithBLOBs">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into dt_article
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="channel_id != null">
+        channel_id,
+      </if>
+      <if test="category_id != null">
+        category_id,
+      </if>
+      <if test="category_title != null">
+        category_title,
+      </if>
+      <if test="call_index != null">
+        call_index,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="subTitle != null">
+        subTitle,
+      </if>
+      <if test="link_url != null">
+        link_url,
+      </if>
+      <if test="img_url != null">
+        img_url,
+      </if>
+      <if test="seo_title != null">
+        seo_title,
+      </if>
+      <if test="seo_keywords != null">
+        seo_keywords,
+      </if>
+      <if test="seo_description != null">
+        seo_description,
+      </if>
+      <if test="tags != null">
+        tags,
+      </if>
+      <if test="zhaiyao != null">
+        zhaiyao,
+      </if>
+      <if test="sort_id != null">
+        sort_id,
+      </if>
+      <if test="click != null">
+        click,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="is_msg != null">
+        is_msg,
+      </if>
+      <if test="is_top != null">
+        is_top,
+      </if>
+      <if test="is_red != null">
+        is_red,
+      </if>
+      <if test="is_hot != null">
+        is_hot,
+      </if>
+      <if test="is_slide != null">
+        is_slide,
+      </if>
+      <if test="is_sys != null">
+        is_sys,
+      </if>
+      <if test="user_name != null">
+        user_name,
+      </if>
+      <if test="add_time != null">
+        add_time,
+      </if>
+      <if test="update_time != null">
+        update_time,
+      </if>
+      <if test="titleEn != null">
+        titleEn,
+      </if>
+      <if test="subTitleEn != null">
+        subTitleEn,
+      </if>
+      <if test="zhaiyaoEn != null">
+        zhaiyaoEn,
+      </if>
+      <if test="attachment_url != null">
+        attachment_url,
+      </if>
+      <if test="localRecOP != null">
+        localRecOP,
+      </if>
+      <if test="contents != null">
+        contents,
+      </if>
+      <if test="contentsEn != null">
+        contentsEn,
+      </if>
+      <if test="remarks != null">
+        remarks,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="channel_id != null">
+        #{channel_id,jdbcType=INTEGER},
+      </if>
+      <if test="category_id != null">
+        #{category_id,jdbcType=INTEGER},
+      </if>
+      <if test="category_title != null">
+        #{category_title,jdbcType=VARCHAR},
+      </if>
+      <if test="call_index != null">
+        #{call_index,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="subTitle != null">
+        #{subTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="link_url != null">
+        #{link_url,jdbcType=VARCHAR},
+      </if>
+      <if test="img_url != null">
+        #{img_url,jdbcType=VARCHAR},
+      </if>
+      <if test="seo_title != null">
+        #{seo_title,jdbcType=VARCHAR},
+      </if>
+      <if test="seo_keywords != null">
+        #{seo_keywords,jdbcType=VARCHAR},
+      </if>
+      <if test="seo_description != null">
+        #{seo_description,jdbcType=VARCHAR},
+      </if>
+      <if test="tags != null">
+        #{tags,jdbcType=VARCHAR},
+      </if>
+      <if test="zhaiyao != null">
+        #{zhaiyao,jdbcType=VARCHAR},
+      </if>
+      <if test="sort_id != null">
+        #{sort_id,jdbcType=INTEGER},
+      </if>
+      <if test="click != null">
+        #{click,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="is_msg != null">
+        #{is_msg,jdbcType=TINYINT},
+      </if>
+      <if test="is_top != null">
+        #{is_top,jdbcType=BIT},
+      </if>
+      <if test="is_red != null">
+        #{is_red,jdbcType=BIT},
+      </if>
+      <if test="is_hot != null">
+        #{is_hot,jdbcType=BIT},
+      </if>
+      <if test="is_slide != null">
+        #{is_slide,jdbcType=BIT},
+      </if>
+      <if test="is_sys != null">
+        #{is_sys,jdbcType=TINYINT},
+      </if>
+      <if test="user_name != null">
+        #{user_name,jdbcType=VARCHAR},
+      </if>
+      <if test="add_time != null">
+        #{add_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="update_time != null">
+        #{update_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="titleEn != null">
+        #{titleEn,jdbcType=VARCHAR},
+      </if>
+      <if test="subTitleEn != null">
+        #{subTitleEn,jdbcType=VARCHAR},
+      </if>
+      <if test="zhaiyaoEn != null">
+        #{zhaiyaoEn,jdbcType=VARCHAR},
+      </if>
+      <if test="attachment_url != null">
+        #{attachment_url,jdbcType=VARCHAR},
+      </if>
+      <if test="localRecOP != null">
+        #{localRecOP,jdbcType=VARCHAR},
+      </if>
+      <if test="contents != null">
+        #{contents,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="contentsEn != null">
+        #{contentsEn,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.admin.model.ArticleWithBLOBs">
+    update dt_article
+    <set>
+      <if test="channel_id != null">
+        channel_id = #{channel_id,jdbcType=INTEGER},
+      </if>
+      <if test="category_id != null">
+        category_id = #{category_id,jdbcType=INTEGER},
+      </if>
+      <if test="category_title != null">
+        category_title = #{category_title,jdbcType=VARCHAR},
+      </if>
+      <if test="call_index != null">
+        call_index = #{call_index,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="subTitle != null">
+        subTitle = #{subTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="link_url != null">
+        link_url = #{link_url,jdbcType=VARCHAR},
+      </if>
+      <if test="img_url != null">
+        img_url = #{img_url,jdbcType=VARCHAR},
+      </if>
+      <if test="seo_title != null">
+        seo_title = #{seo_title,jdbcType=VARCHAR},
+      </if>
+      <if test="seo_keywords != null">
+        seo_keywords = #{seo_keywords,jdbcType=VARCHAR},
+      </if>
+      <if test="seo_description != null">
+        seo_description = #{seo_description,jdbcType=VARCHAR},
+      </if>
+      <if test="tags != null">
+        tags = #{tags,jdbcType=VARCHAR},
+      </if>
+      <if test="zhaiyao != null">
+        zhaiyao = #{zhaiyao,jdbcType=VARCHAR},
+      </if>
+      <if test="sort_id != null">
+        sort_id = #{sort_id,jdbcType=INTEGER},
+      </if>
+      <if test="click != null">
+        click = #{click,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="is_msg != null">
+        is_msg = #{is_msg,jdbcType=TINYINT},
+      </if>
+      <if test="is_top != null">
+        is_top = #{is_top,jdbcType=BIT},
+      </if>
+      <if test="is_red != null">
+        is_red = #{is_red,jdbcType=BIT},
+      </if>
+      <if test="is_hot != null">
+        is_hot = #{is_hot,jdbcType=BIT},
+      </if>
+      <if test="is_slide != null">
+        is_slide = #{is_slide,jdbcType=BIT},
+      </if>
+      <if test="is_sys != null">
+        is_sys = #{is_sys,jdbcType=TINYINT},
+      </if>
+      <if test="user_name != null">
+        user_name = #{user_name,jdbcType=VARCHAR},
+      </if>
+      <if test="add_time != null">
+        add_time = #{add_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="update_time != null">
+        update_time = #{update_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="titleEn != null">
+        titleEn = #{titleEn,jdbcType=VARCHAR},
+      </if>
+      <if test="subTitleEn != null">
+        subTitleEn = #{subTitleEn,jdbcType=VARCHAR},
+      </if>
+      <if test="zhaiyaoEn != null">
+        zhaiyaoEn = #{zhaiyaoEn,jdbcType=VARCHAR},
+      </if>
+      <if test="attachment_url != null">
+        attachment_url = #{attachment_url,jdbcType=VARCHAR},
+      </if>
+      <if test="localRecOP != null">
+        localRecOP = #{localRecOP,jdbcType=VARCHAR},
+      </if>
+      <if test="contents != null">
+        contents = #{contents,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="contentsEn != null">
+        contentsEn = #{contentsEn,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="remarks != null">
+        remarks=#{remarks,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from dt_article
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <select id="selectByCondition" parameterType="com.admin.model.Article" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from dt_article where 1 = 1
+    <if test="channel_id != null">
+        and channel_id = #{channel_id,jdbcType=INTEGER}
+    </if>
+    <if test="category_id != null">
+        and category_id = #{category_id,jdbcType=INTEGER}
+    </if>
+    <if test="category_title != null">
+      and category_title = #{category_title,jdbcType=VARCHAR}
+    </if>
+    <if test="call_index != null">
+        and call_index = #{call_index,jdbcType=VARCHAR}
+    </if>
+    <if test="title != null">
+        and title = #{title,jdbcType=VARCHAR}
+    </if>
+    <if test="subTitle != null">
+      and subTitle = #{subTitle,jdbcType=VARCHAR}
+    </if>
+    <if test="link_url != null">
+        and link_url = #{link_url,jdbcType=VARCHAR}
+    </if>
+    <if test="img_url != null">
+        and img_url = #{img_url,jdbcType=VARCHAR}
+    </if>
+    <if test="seo_title != null">
+        and seo_title = #{seo_title,jdbcType=VARCHAR}
+    </if>
+    <if test="seo_keywords != null">
+        and seo_keywords = #{seo_keywords,jdbcType=VARCHAR}
+    </if>
+    <if test="seo_description != null">
+        and seo_description = #{seo_description,jdbcType=VARCHAR}
+    </if>
+    <if test="tags != null">
+        and tags = #{tags,jdbcType=VARCHAR}
+    </if>
+    <if test="zhaiyao != null">
+        and zhaiyao = #{zhaiyao,jdbcType=VARCHAR}
+    </if>
+    <if test="sort_id != null">
+        and sort_id = #{sort_id,jdbcType=INTEGER}
+    </if>
+    <if test="click != null">
+        and click = #{click,jdbcType=INTEGER}
+    </if>
+    <if test="status != null">
+        and status = #{status,jdbcType=TINYINT}
+    </if>
+    <if test="is_msg != null">
+        and is_msg = #{is_msg,jdbcType=TINYINT}
+    </if>
+    <if test="is_top != null">
+        and is_top = #{is_top,jdbcType=BIT}
+    </if>
+    <if test="is_red != null">
+        and is_red = #{is_red,jdbcType=BIT}
+    </if>
+    <if test="is_hot != null">
+        and is_hot = #{is_hot,jdbcType=BIT}
+    </if>
+    <if test="is_slide != null">
+        and is_slide = #{is_slide,jdbcType=BIT}
+    </if>
+    <if test="is_sys != null">
+        and is_sys = #{is_sys,jdbcType=TINYINT}
+    </if>
+    <if test="user_name != null">
+        and user_name = #{user_name,jdbcType=VARCHAR}
+    </if>
+    <if test="add_time != null">
+        and add_time = #{add_time,jdbcType=TIMESTAMP}
+    </if>
+    <if test="update_time != null">
+        and update_time = #{update_time,jdbcType=TIMESTAMP}
+    </if>
+    <if test="contents != null">
+        and contents = #{contents,jdbcType=LONGVARCHAR}
+    </if>
+  </select>
+  <select id="selectAll" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from dt_article
+  </select>
+  <delete id="deleteBySelective" parameterType="com.admin.model.Article">
+    delete from dt_article
+    <where>
+      <if test="channel_id != null">
+          and channel_id = #{channel_id,jdbcType=INTEGER}
+      </if>
+      <if test="category_id != null">
+          and category_id = #{category_id,jdbcType=INTEGER}
+      </if>
+      <if test="category_title != null">
+        and category_title = #{category_title,jdbcType=VARCHAR}
+      </if>
+      <if test="call_index != null">
+          and call_index = #{call_index,jdbcType=VARCHAR}
+      </if>
+      <if test="title != null">
+          and title = #{title,jdbcType=VARCHAR}
+      </if>
+      <if test="subTitle != null">
+        and subTitle = #{subTitle,jdbcType=VARCHAR}
+      </if>
+      <if test="link_url != null">
+          and link_url = #{link_url,jdbcType=VARCHAR}
+      </if>
+      <if test="img_url != null">
+          and img_url = #{img_url,jdbcType=VARCHAR}
+      </if>
+      <if test="seo_title != null">
+          and seo_title = #{seo_title,jdbcType=VARCHAR}
+      </if>
+      <if test="seo_keywords != null">
+          and seo_keywords = #{seo_keywords,jdbcType=VARCHAR}
+      </if>
+      <if test="seo_description != null">
+          and seo_description = #{seo_description,jdbcType=VARCHAR}
+      </if>
+      <if test="tags != null">
+          and tags = #{tags,jdbcType=VARCHAR}
+      </if>
+      <if test="zhaiyao != null">
+          and zhaiyao = #{zhaiyao,jdbcType=VARCHAR}
+      </if>
+      <if test="sort_id != null">
+          and sort_id = #{sort_id,jdbcType=INTEGER}
+      </if>
+      <if test="click != null">
+          and click = #{click,jdbcType=INTEGER}
+      </if>
+      <if test="status != null">
+          and status = #{status,jdbcType=TINYINT}
+      </if>
+      <if test="is_msg != null">
+          and is_msg = #{is_msg,jdbcType=TINYINT}
+      </if>
+      <if test="is_top != null">
+          and is_top = #{is_top,jdbcType=BIT}
+      </if>
+      <if test="is_red != null">
+          and is_red = #{is_red,jdbcType=BIT}
+      </if>
+      <if test="is_hot != null">
+          and is_hot = #{is_hot,jdbcType=BIT}
+      </if>
+      <if test="is_slide != null">
+          and is_slide = #{is_slide,jdbcType=BIT}
+      </if>
+      <if test="is_sys != null">
+          and is_sys = #{is_sys,jdbcType=TINYINT}
+      </if>
+      <if test="user_name != null">
+          and user_name = #{user_name,jdbcType=VARCHAR}
+      </if>
+      <if test="add_time != null">
+          and add_time = #{add_time,jdbcType=TIMESTAMP}
+      </if>
+      <if test="update_time != null">
+          and update_time = #{update_time,jdbcType=TIMESTAMP}
+      </if>
+      <if test="contents != null">
+          and contents = #{contents,jdbcType=LONGVARCHAR}
+      </if>
+    </where>
+  </delete>
+  <select id="selByStatusAndCategoryId" parameterType="java.util.Map" resultMap="ResultMapWithBLOBs">
+    select <include refid="Base_Column_List"></include>
+    ,
+    <include refid="Blob_Column_List"></include>
+    from dt_article
+    <trim prefix="where" prefixOverrides="and">
+      <if test="status!=null">
+        status=#{status,jdbcType=INTEGER}
+      </if>
+      <if test="categoryid!=null">
+        and category_id=#{categoryid,jdbcType=INTEGER}
+      </if>
+      order by sort_id ASC
+    </trim>
+  </select>
+
+  <select id="preNextRecWhere" parameterType="java.util.Map" resultMap="ResultMapWithBLOBs">
+    select <include refid="Base_Column_List"></include>
+    ,
+    <include refid="Blob_Column_List"></include>
+    FROM dt_article
+    <if test="strWhere!=null and strWhere!=''">
+      WHERE ${strWhere}
+    </if>
+    <if test="ln!=null">
+      limit ${ln}
+    </if>
+  </select>
+</mapper>

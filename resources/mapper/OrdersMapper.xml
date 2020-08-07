@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.admin.dao.OrdersMapper">
+  <cache type="org.mybatis.caches.ehcache.LoggingEhcache" />
+  <resultMap id="BaseResultMap" type="com.admin.model.Orders">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="Name" jdbcType="VARCHAR" property="name" />
+    <result column="ompanyName" jdbcType="VARCHAR" property="ompanyName" />
+    <result column="tel" jdbcType="VARCHAR" property="tel" />
+    <result column="fax" jdbcType="VARCHAR" property="fax" />
+    <result column="ddr" jdbcType="VARCHAR" property="ddr" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.admin.model.Orders">
+    <result column="contents" jdbcType="LONGVARCHAR" property="contents" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, title, Name, ompanyName, tel, fax, ddr, email
+  </sql>
+  <sql id="Blob_Column_List">
+    contents
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from dt_orders
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <insert id="insertSelective" parameterType="com.admin.model.Orders">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into dt_orders
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="title != null">
+        title,
+      </if>
+      <if test="name != null">
+        Name,
+      </if>
+      <if test="ompanyName != null">
+        ompanyName,
+      </if>
+      <if test="tel != null">
+        tel,
+      </if>
+      <if test="fax != null">
+        fax,
+      </if>
+      <if test="ddr != null">
+        ddr,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="contents != null">
+        contents,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="ompanyName != null">
+        #{ompanyName,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null">
+        #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="fax != null">
+        #{fax,jdbcType=VARCHAR},
+      </if>
+      <if test="ddr != null">
+        #{ddr,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="contents != null">
+        #{contents,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.admin.model.Orders">
+    update dt_orders
+    <set>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        Name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="ompanyName != null">
+        ompanyName = #{ompanyName,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null">
+        tel = #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="fax != null">
+        fax = #{fax,jdbcType=VARCHAR},
+      </if>
+      <if test="ddr != null">
+        ddr = #{ddr,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="contents != null">
+        contents = #{contents,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from dt_orders
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <select id="selectByCondition" parameterType="com.admin.model.Orders" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from dt_orders where 1 = 1 
+    <if test="title != null">
+        and title = #{title,jdbcType=VARCHAR}
+    </if>
+    <if test="name != null">
+        and Name = #{name,jdbcType=VARCHAR}
+    </if>
+    <if test="ompanyName != null">
+        and ompanyName = #{ompanyName,jdbcType=VARCHAR}
+    </if>
+    <if test="tel != null">
+        and tel = #{tel,jdbcType=VARCHAR}
+    </if>
+    <if test="fax != null">
+        and fax = #{fax,jdbcType=VARCHAR}
+    </if>
+    <if test="ddr != null">
+        and ddr = #{ddr,jdbcType=VARCHAR}
+    </if>
+    <if test="email != null">
+        and email = #{email,jdbcType=VARCHAR}
+    </if>
+    <if test="contents != null">
+        and contents = #{contents,jdbcType=LONGVARCHAR}
+    </if>
+  </select>
+  <select id="selectAll" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from dt_orders
+  </select>
+  <delete id="deleteBySelective" parameterType="com.admin.model.Orders">
+    delete from dt_orders
+    <where>
+      <if test="title != null">
+          and title = #{title,jdbcType=VARCHAR}
+      </if>
+      <if test="name != null">
+          and Name = #{name,jdbcType=VARCHAR}
+      </if>
+      <if test="ompanyName != null">
+          and ompanyName = #{ompanyName,jdbcType=VARCHAR}
+      </if>
+      <if test="tel != null">
+          and tel = #{tel,jdbcType=VARCHAR}
+      </if>
+      <if test="fax != null">
+          and fax = #{fax,jdbcType=VARCHAR}
+      </if>
+      <if test="ddr != null">
+          and ddr = #{ddr,jdbcType=VARCHAR}
+      </if>
+      <if test="email != null">
+          and email = #{email,jdbcType=VARCHAR}
+      </if>
+      <if test="contents != null">
+          and contents = #{contents,jdbcType=LONGVARCHAR}
+      </if>
+    </where>
+  </delete>
+</mapper>

@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.admin.dao.ArticleAttributeFieldMapper">
+  <cache type="org.mybatis.caches.ehcache.LoggingEhcache" />
+  <resultMap id="BaseResultMap" type="com.admin.model.ArticleAttributeField">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="control_type" jdbcType="VARCHAR" property="control_type" />
+    <result column="data_type" jdbcType="VARCHAR" property="data_type" />
+    <result column="data_length" jdbcType="INTEGER" property="data_length" />
+    <result column="data_place" jdbcType="TINYINT" property="data_place" />
+    <result column="is_required" jdbcType="TINYINT" property="is_required" />
+    <result column="is_password" jdbcType="TINYINT" property="is_password" />
+    <result column="is_html" jdbcType="TINYINT" property="is_html" />
+    <result column="editor_type" jdbcType="TINYINT" property="editor_type" />
+    <result column="valid_tip_msg" jdbcType="VARCHAR" property="valid_tip_msg" />
+    <result column="valid_error_msg" jdbcType="VARCHAR" property="valid_error_msg" />
+    <result column="sort_id" jdbcType="INTEGER" property="sort_id" />
+    <result column="is_sys" jdbcType="TINYINT" property="is_sys" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.admin.model.ArticleAttributeFieldWithBLOBs">
+    <result column="item_option" jdbcType="LONGVARCHAR" property="item_option" />
+    <result column="default_value" jdbcType="LONGVARCHAR" property="default_value" />
+    <result column="valid_pattern" jdbcType="LONGVARCHAR" property="valid_pattern" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, name, title, control_type, data_type, data_length, data_place, is_required, is_password, 
+    is_html, editor_type, valid_tip_msg, valid_error_msg, sort_id, is_sys
+  </sql>
+  <sql id="Blob_Column_List">
+    item_option, default_value, valid_pattern
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from dt_article_attribute_field
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <insert id="insertSelective" parameterType="com.admin.model.ArticleAttributeFieldWithBLOBs">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into dt_article_attribute_field
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        name,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="control_type != null">
+        control_type,
+      </if>
+      <if test="data_type != null">
+        data_type,
+      </if>
+      <if test="data_length != null">
+        data_length,
+      </if>
+      <if test="data_place != null">
+        data_place,
+      </if>
+      <if test="is_required != null">
+        is_required,
+      </if>
+      <if test="is_password != null">
+        is_password,
+      </if>
+      <if test="is_html != null">
+        is_html,
+      </if>
+      <if test="editor_type != null">
+        editor_type,
+      </if>
+      <if test="valid_tip_msg != null">
+        valid_tip_msg,
+      </if>
+      <if test="valid_error_msg != null">
+        valid_error_msg,
+      </if>
+      <if test="sort_id != null">
+        sort_id,
+      </if>
+      <if test="is_sys != null">
+        is_sys,
+      </if>
+      <if test="item_option != null">
+        item_option,
+      </if>
+      <if test="default_value != null">
+        default_value,
+      </if>
+      <if test="valid_pattern != null">
+        valid_pattern,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="control_type != null">
+        #{control_type,jdbcType=VARCHAR},
+      </if>
+      <if test="data_type != null">
+        #{data_type,jdbcType=VARCHAR},
+      </if>
+      <if test="data_length != null">
+        #{data_length,jdbcType=INTEGER},
+      </if>
+      <if test="data_place != null">
+        #{data_place,jdbcType=TINYINT},
+      </if>
+      <if test="is_required != null">
+        #{is_required,jdbcType=TINYINT},
+      </if>
+      <if test="is_password != null">
+        #{is_password,jdbcType=TINYINT},
+      </if>
+      <if test="is_html != null">
+        #{is_html,jdbcType=TINYINT},
+      </if>
+      <if test="editor_type != null">
+        #{editor_type,jdbcType=TINYINT},
+      </if>
+      <if test="valid_tip_msg != null">
+        #{valid_tip_msg,jdbcType=VARCHAR},
+      </if>
+      <if test="valid_error_msg != null">
+        #{valid_error_msg,jdbcType=VARCHAR},
+      </if>
+      <if test="sort_id != null">
+        #{sort_id,jdbcType=INTEGER},
+      </if>
+      <if test="is_sys != null">
+        #{is_sys,jdbcType=TINYINT},
+      </if>
+      <if test="item_option != null">
+        #{item_option,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="default_value != null">
+        #{default_value,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="valid_pattern != null">
+        #{valid_pattern,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.admin.model.ArticleAttributeFieldWithBLOBs">
+    update dt_article_attribute_field
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="control_type != null">
+        control_type = #{control_type,jdbcType=VARCHAR},
+      </if>
+      <if test="data_type != null">
+        data_type = #{data_type,jdbcType=VARCHAR},
+      </if>
+      <if test="data_length != null">
+        data_length = #{data_length,jdbcType=INTEGER},
+      </if>
+      <if test="data_place != null">
+        data_place = #{data_place,jdbcType=TINYINT},
+      </if>
+      <if test="is_required != null">
+        is_required = #{is_required,jdbcType=TINYINT},
+      </if>
+      <if test="is_password != null">
+        is_password = #{is_password,jdbcType=TINYINT},
+      </if>
+      <if test="is_html != null">
+        is_html = #{is_html,jdbcType=TINYINT},
+      </if>
+      <if test="editor_type != null">
+        editor_type = #{editor_type,jdbcType=TINYINT},
+      </if>
+      <if test="valid_tip_msg != null">
+        valid_tip_msg = #{valid_tip_msg,jdbcType=VARCHAR},
+      </if>
+      <if test="valid_error_msg != null">
+        valid_error_msg = #{valid_error_msg,jdbcType=VARCHAR},
+      </if>
+      <if test="sort_id != null">
+        sort_id = #{sort_id,jdbcType=INTEGER},
+      </if>
+      <if test="is_sys != null">
+        is_sys = #{is_sys,jdbcType=TINYINT},
+      </if>
+      <if test="item_option != null">
+        item_option = #{item_option,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="default_value != null">
+        default_value = #{default_value,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="valid_pattern != null">
+        valid_pattern = #{valid_pattern,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from dt_article_attribute_field
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <select id="selectByCondition" parameterType="com.admin.model.ArticleAttributeFieldWithBLOBs" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from dt_article_attribute_field where 1 = 1 
+    <if test="name != null">
+        and name = #{name,jdbcType=VARCHAR}
+    </if>
+    <if test="title != null">
+        and title = #{title,jdbcType=VARCHAR}
+    </if>
+    <if test="control_type != null">
+        and control_type = #{control_type,jdbcType=VARCHAR}
+    </if>
+    <if test="data_type != null">
+        and data_type = #{data_type,jdbcType=VARCHAR}
+    </if>
+    <if test="data_length != null">
+        and data_length = #{data_length,jdbcType=INTEGER}
+    </if>
+    <if test="data_place != null">
+        and data_place = #{data_place,jdbcType=TINYINT}
+    </if>
+    <if test="is_required != null">
+        and is_required = #{is_required,jdbcType=TINYINT}
+    </if>
+    <if test="is_password != null">
+        and is_password = #{is_password,jdbcType=TINYINT}
+    </if>
+    <if test="is_html != null">
+        and is_html = #{is_html,jdbcType=TINYINT}
+    </if>
+    <if test="editor_type != null">
+        and editor_type = #{editor_type,jdbcType=TINYINT}
+    </if>
+    <if test="valid_tip_msg != null">
+        and valid_tip_msg = #{valid_tip_msg,jdbcType=VARCHAR}
+    </if>
+    <if test="valid_error_msg != null">
+        and valid_error_msg = #{valid_error_msg,jdbcType=VARCHAR}
+    </if>
+    <if test="sort_id != null">
+        and sort_id = #{sort_id,jdbcType=INTEGER}
+    </if>
+    <if test="is_sys != null">
+        and is_sys = #{is_sys,jdbcType=TINYINT}
+    </if>
+    <if test="item_option != null">
+        and item_option = #{item_option,jdbcType=LONGVARCHAR}
+    </if>
+    <if test="default_value != null">
+        and default_value = #{default_value,jdbcType=LONGVARCHAR}
+    </if>
+    <if test="valid_pattern != null">
+        and valid_pattern = #{valid_pattern,jdbcType=LONGVARCHAR}
+    </if>
+  </select>
+  <select id="selectAll" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from dt_article_attribute_field
+  </select>
+  <delete id="deleteBySelective" parameterType="com.admin.model.ArticleAttributeFieldWithBLOBs">
+    delete from dt_article_attribute_field
+    <where>
+      <if test="name != null">
+          and name = #{name,jdbcType=VARCHAR}
+      </if>
+      <if test="title != null">
+          and title = #{title,jdbcType=VARCHAR}
+      </if>
+      <if test="control_type != null">
+          and control_type = #{control_type,jdbcType=VARCHAR}
+      </if>
+      <if test="data_type != null">
+          and data_type = #{data_type,jdbcType=VARCHAR}
+      </if>
+      <if test="data_length != null">
+          and data_length = #{data_length,jdbcType=INTEGER}
+      </if>
+      <if test="data_place != null">
+          and data_place = #{data_place,jdbcType=TINYINT}
+      </if>
+      <if test="is_required != null">
+          and is_required = #{is_required,jdbcType=TINYINT}
+      </if>
+      <if test="is_password != null">
+          and is_password = #{is_password,jdbcType=TINYINT}
+      </if>
+      <if test="is_html != null">
+          and is_html = #{is_html,jdbcType=TINYINT}
+      </if>
+      <if test="editor_type != null">
+          and editor_type = #{editor_type,jdbcType=TINYINT}
+      </if>
+      <if test="valid_tip_msg != null">
+          and valid_tip_msg = #{valid_tip_msg,jdbcType=VARCHAR}
+      </if>
+      <if test="valid_error_msg != null">
+          and valid_error_msg = #{valid_error_msg,jdbcType=VARCHAR}
+      </if>
+      <if test="sort_id != null">
+          and sort_id = #{sort_id,jdbcType=INTEGER}
+      </if>
+      <if test="is_sys != null">
+          and is_sys = #{is_sys,jdbcType=TINYINT}
+      </if>
+      <if test="item_option != null">
+          and item_option = #{item_option,jdbcType=LONGVARCHAR}
+      </if>
+      <if test="default_value != null">
+          and default_value = #{default_value,jdbcType=LONGVARCHAR}
+      </if>
+      <if test="valid_pattern != null">
+          and valid_pattern = #{valid_pattern,jdbcType=LONGVARCHAR}
+      </if>
+    </where>
+  </delete>
+</mapper>

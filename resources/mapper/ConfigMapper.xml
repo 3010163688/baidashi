@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.admin.dao.ConfigMapper">
+  <cache type="org.mybatis.caches.ehcache.LoggingEhcache" />
+  <resultMap id="BaseResultMap" type="com.admin.model.Config">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="mkey" jdbcType="VARCHAR" property="mkey" />
+    <result column="mvalue" jdbcType="VARCHAR" property="mvalue" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, mkey, mvalue
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from dt_config
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <insert id="insertSelective" parameterType="com.admin.model.Config">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into dt_config
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="mkey != null">
+        mkey,
+      </if>
+      <if test="mvalue != null">
+        mvalue,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="mkey != null">
+        #{mkey,jdbcType=VARCHAR},
+      </if>
+      <if test="mvalue != null">
+        #{mvalue,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.admin.model.Config">
+    update dt_config
+    <set>
+      <if test="mkey != null">
+        mkey = #{mkey,jdbcType=VARCHAR},
+      </if>
+      <if test="mvalue != null">
+        mvalue = #{mvalue,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from dt_config
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <select id="selectByCondition" parameterType="com.admin.model.Config" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from dt_config where 1 = 1 
+    <if test="mkey != null">
+        and mkey = #{mkey,jdbcType=VARCHAR}
+    </if>
+    <if test="mvalue != null">
+        and mvalue = #{mvalue,jdbcType=VARCHAR}
+    </if>
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from dt_config
+  </select>
+  <delete id="deleteBySelective" parameterType="com.admin.model.Config">
+    delete from dt_config
+    <where>
+      <if test="mkey != null">
+          and mkey = #{mkey,jdbcType=VARCHAR}
+      </if>
+      <if test="mvalue != null">
+          and mvalue = #{mvalue,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </delete>
+</mapper>
